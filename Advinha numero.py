@@ -55,14 +55,19 @@ At the end the program will say your number""")
         while True:
             res = input('Is the number in this list?(yes/not): ').lower()
             try:
-                if res == "yes":
-                    return True
-                elif res == "not":
-                    return False
-                raise RespostaError
+                if res.isalpha():
+                    if res == "yes":
+                        return True
+                    elif res == "not":
+                        return False
+                else:
+                    raise NotIsAlphaError
+                raise YesNotError
 
-            except RespostaError:
-                print(RespostaError())
+            except (YesNotError, NotIsAlphaError) as error:
+                print(error)
+            except:
+                print('Unknow error')
 
     #prints the number
     def imprimeNumeroSecreto(self):
@@ -94,10 +99,14 @@ At the end the program will say your number""")
 
         self.imprimeNumeroSecreto()
 
-class RespostaError(Exception):
+class YesNotError(Exception):
     def __str__(self):
         return "Resposta errada, resonda sim ou não"
 
+
+class NotIsAlphaError(Exception):
+    def __str__(self):
+        return 'Responda somente com letras'
 
 if __name__ == '__main__':
     x = Jogo()
